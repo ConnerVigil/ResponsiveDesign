@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Blog Site</title>
+    <style>
+      body.dark-mode {
+        background-color: black;
+        color: #fff;
+      }
+
+      body.dark-mode .like-count,
+      body.dark-mode .tag {
+        color: black;
+      }
+
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+      }
+
+      header {
+        background-color: #f2f2f2;
+        padding: 20px;
+        text-align: center;
+      }
+
+      header.dark-mode {
+        background-color: black;
+        color: #fff;
+      }
+
+      header h1 {
+        font-size: 32px;
+        margin: 0;
+      }
+
+      header a {
+        color: #333;
+        text-decoration: none;
+        margin-right: 10px;
+      }
+
+      main {
+        padding: 20px;
+        margin-left: 20%;
+        margin-right: 20%;
+      }
+
+      @media (max-width: 700px) {
+        main {
+          margin-left: 0;
+          margin-right: 0;
+        }
+      }
+
+      section {
+        margin-bottom: 20px;
+        border-bottom: 1px solid #ccc;
+        padding-bottom: 20px;
+      }
+
+      h2 {
+        font-size: 24px;
+        margin: 0;
+      }
+
+      p {
+        margin: 10px 0;
+      }
+
+      .published-date {
+        color: #999;
+        font-size: 14px;
+      }
+
+      .author {
+        color: #666;
+        font-size: 14px;
+        margin-bottom: 10px;
+        font-style: italic;
+      }
+
+      .reading-time {
+        color: #666;
+        font-size: 14px;
+        margin-bottom: 10px;
+      }
+
+      .banner-image {
+        max-width: 100%;
+        height: auto;
+        margin-bottom: 10px;
+        border-radius: 10px;
+      }
+
+      .like-count {
+        font-size: 14px;
+        margin-bottom: 10px;
+        margin-right: 10px;
+        background-color: lightblue;
+        font-weight: bold;
+        padding: 5px;
+        border-radius: 5px;
+        display: inline;
+      }
+
+      .tag {
+        font-size: 14px;
+        margin-bottom: 10px;
+        margin-right: 10px;
+        background-color: rgb(234, 161, 153);
+        font-weight: bold;
+        padding: 5px;
+        border-radius: 5px;
+        display: inline;
+      }
+
+      .dark-mode-toggle {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 9999;
+        background-color: #333;
+        color: #fff;
+        padding: 10px 20px;
+        border-radius: 5px;
+        font-size: 16px;
+        cursor: pointer;
+      }
+
+      footer {
+        background-color: #f2f2f2;
+        padding: 20px;
+        text-align: center;
+        font-size: 14px;
+        color: #666;
+      }
+
+      footer.dark-mode {
+        background-color: black;
+        color: #fff;
+      }
+    </style>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script defer src="page.js" type="module"></script>
+    <script src="__lightserver__/reload-client.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@unocss/runtime/mini.global.js"></script>
+  </head>
+  <body id="app">
+    <header>
+      <a href=""><h1>My Blog Site</h1></a>
+      <a href="/top">Top Posts</a>
+      <a href="/archive">Archive</a>
+      <a href="/about">About Me</a>
+    </header>
+    <main>
+      <section v-for="post in posts">
+        <h2>{{ post.title }}</h2>
+        <p class="author">Author: {{ post.author }}</p>
+        <p class="like-count">Likes: {{ post.likes }}</p>
+        <p>Tags:</p>
+        <li v-for="tag in post.tags" class="tag">{{ tag }}</li>
+        <p class="reading-time">
+          Estimated Reading Time: {{ post.readingTime }}
+        </p>
+        <img class="banner-image" :src="post.bannerImage" alt="Banner Image" />
+        <p class="published-date">{{ post.published }}</p>
+        <div>
+          <p v-for='line in post.body.split("\n")'>{{ line }}</p>
+        </div>
+      </section>
+      <button onclick="toggleDarkMode()" class="dark-mode-toggle">
+        Toggle Dark Mode
+      </button>
+    </main>
+    <footer>
+      &copy; {{ new Date().getFullYear() }} Hunter Henrichsen. All Rights
+      Reserved.
+    </footer>
+  </body>
+  <script>
+    function toggleDarkMode() {
+      const body = document.querySelector("body");
+      const header = document.querySelector("header");
+      const footer = document.querySelector("footer");
+      body.classList.toggle("dark-mode");
+      header.classList.toggle("dark-mode");
+      footer.classList.toggle("dark-mode");
+    }
+  </script>
+</html>
